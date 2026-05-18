@@ -1,11 +1,18 @@
 "use client";
-import { Button } from "@heroui/react";
+import { authClient } from "@/lib/auth-client";
+import { Avatar, Button } from "@heroui/react";
 import Link from "next/link";
 import { useState } from "react";
+import { IoMenuSharp } from "react-icons/io5";
 
 const Navbar = () => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(true);
+ const { data: session, isPending } = authClient.useSession();
+  const user = session?.user;
 
+  const handleSignOut = async () => {
+    await authClient.signOut();
+  };
 
   return (
     <nav className="flex items-center justify-between px-8 py-4 border-b">
@@ -22,39 +29,49 @@ const Navbar = () => {
         <Link href="/booking">My Bookings</Link>
       </div>
 
-      <Button>Login</Button>
-      {/* <div className="relative">
-        {session ? (
+{/* <Link href={'/login'}> <Button  className={'flex-1 py-2 bg-yellow-400 hover:bg-yellow-300 text-zinc-950 font-bold text-sm uppercase rounded-lg'}>Login</Button></Link> */}
+      
+      <div className="relative">
+        {user ? (
           <div>
           
             <button
               onClick={() => setDropdownOpen(!dropdownOpen)}
               className="flex items-center gap-2"
             >
-             <img src="" alt="" />
-              <span className="text-sm font-medium">{session.user?.name}</span>
-              <span>▾</span>
+             <Link href={"/profile"}>
+                    <Avatar>
+                      <Avatar.Image
+                        referrerPolicy="no-referrer"
+                        alt={user?.name}
+                        src={user?.image}
+                      />
+                      <Avatar.Fallback>{user?.name.charAt(0)}</Avatar.Fallback>
+                    </Avatar>
+                  </Link>
+              <span className="text-sm font-medium">{user?.name}</span>
+              <span><IoMenuSharp className="font-bold text-xl"/></span>
             </button>
 
           
             {dropdownOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg z-50 py-1">
                 <Link
-                  href="/cars/add"
+                  href="/add"
                   className="block px-4 py-2 text-sm hover:bg-gray-50"
                   onClick={() => setDropdownOpen(false)}
                 >
                   Add Car
                 </Link>
                 <Link
-                  href="/bookings"
+                  href="/booking"
                   className="block px-4 py-2 text-sm hover:bg-gray-50"
                   onClick={() => setDropdownOpen(false)}
                 >
                   My Bookings
                 </Link>
                 <Link
-                  href="/cars/my-cars"
+                  href="/my-added-cars"
                   className="block px-4 py-2 text-sm hover:bg-gray-50"
                   onClick={() => setDropdownOpen(false)}
                 >
@@ -62,7 +79,7 @@ const Navbar = () => {
                 </Link>
                 <hr className="my-1" />
                 <button
-                  onClick={handleLogout}
+                  onClick={handleSignOut}
                   className="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-gray-50"
                 >
                   Logout
@@ -71,14 +88,9 @@ const Navbar = () => {
             )}
           </div>
         ) : (
-          <Link
-            href="/login"
-            className="px-4 py-2 bg-black text-white text-sm rounded"
-          >
-            Login
-          </Link>
+          <Link href={'/login'}> <Button className={'flex-1 py-2 bg-yellow-400 hover:bg-yellow-300 text-zinc-950 font-bold text-sm uppercase rounded-lg'}>Login</Button></Link>
         )}
-      </div> */}
+      </div>
     </nav>
   );
 };

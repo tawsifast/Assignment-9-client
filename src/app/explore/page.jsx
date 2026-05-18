@@ -6,11 +6,11 @@ const ExploreCarPage = async () => {
     const cars = await res.json();
     console.log(cars,"cars");
     return (
-        <div className='w-11/12 mx-auto'>
-            <h2>Explore Cars</h2>
+        <div className='w-11/12 mx-auto items-stretch'>
+            <h2 className='font-bold text-4xl text-center my-6'>Explore Cars</h2>
             <div className='grid grid-cols-3 gap-7'>
                 {
-                    cars.map((car)=><CarCard key={car._id} car={car}></CarCard>)
+                    cars.map((car)=><CarCard key={car._id} car={car} ></CarCard>)
                 }
             </div>
         </div>

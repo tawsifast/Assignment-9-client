@@ -1,11 +1,38 @@
-import React from 'react';
+import { auth } from "@/lib/auth";
+import { Card } from "@heroui/react";
+import { headers } from "next/headers";
+import Image from "next/image";
 
-const BookingCarPage = () => {
-    return (
-        <div>
-            booking
-        </div>
-    );
+const BookingCarPage = async () => {
+  const session = await auth.api.getSession({
+    headers: await headers(), // you need to pass the headers object.
+  });
+
+  const user = session?.user;
+  // console.log(user, "session");
+  const res = await fetch(`http://localhost:5000/carBooking/${user?.id}`);
+  const bookings = await res.json();
+  console.log(bookings, "data");
+
+  return (
+    <div className="w-11/12 mx-auto">
+      <h2 className="font-bold text-4xl text-center my-6">My Booking</h2>
+      <div>
+        {bookings.map((booking) => (
+          <Card key={booking._id}>
+            <div className="">
+              <Image
+                src={booking.image}
+                alt="h"
+                width={150}
+                height={150}
+              ></Image>
+            </div>
+          </Card>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default BookingCarPage;
