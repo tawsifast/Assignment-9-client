@@ -1,5 +1,4 @@
 "use client";
-
 import { authClient } from "@/lib/auth-client";
 import { Envelope } from "@gravity-ui/icons";
 import {
@@ -38,6 +37,7 @@ export function BookNowModal({ car }) {
       UserName: user.name,
       carId: _id,
       model,
+      brand,
       image,
       pricePerDay,
       category,
