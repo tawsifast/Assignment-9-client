@@ -16,12 +16,16 @@ const CarCard = ({ car }) => {
         <div className="relative aspect-square">
           <Image
             src={image}
-            alt={`${brand}${model} `}
+            alt={`${brand}${model}`}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover rounded-xl b"
           ></Image>
-        <Chip size="sm" className="absolute  px-2 top-2 left-2">{available === true ? <h2 className="text-green-600 bg-green-100">Available</h2>:<h2 className="text-red-600 bg-red-100">Unavailable</h2>}</Chip>
+    <Chip size="sm" className="absolute px-2 top-2 left-2">{available === "true" ? (
+    <h2 className="text-green-600 bg-green-100 px-2 py-1 rounded">Available</h2>) :
+     (<h2 className="text-red-600 bg-red-100 px-2 py-1 rounded">Unavailable</h2>
+  )}
+</Chip>
         <p className="absolute px-2 top-2 right-2 text-pink-700"><BiHeart/></p>
         </div>
 

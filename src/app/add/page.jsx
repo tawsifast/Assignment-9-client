@@ -1,36 +1,34 @@
 "use client";
-import {
-  Button,
-  Card,
-  CardBody,
-  FieldError,
-  Input,
-  Label,
-  ListBox,
-  Select,
-  TextArea,
-  TextField,
-} from "@heroui/react";
+import { authClient } from "@/lib/auth-client";
+import {Button,Card,CardBody,FieldError,Input,Label,ListBox,Select,TextArea,TextField,} from "@heroui/react";
 
-const carTypes = [
-  "SUV",
-  "Sedan",
-  "Hatchback",
-  "Luxury",
-  "Sports",
-  "Electric",
-  "Pickup",
-  "Van",
+const carTypes = ["SUV","Sedan","Hatchback","Luxury","Sports","Electric","Pickup","Van",
 ];
 const fuelTypes = ["Petrol", "Diesel", "Electric", "Hybrid"];
 const transmissions = ["Automatic", "Manual"];
 
 const AddCarPage = () => {
+  const { data: session, isPending } = authClient.useSession();
+  const user = session?.user;
+
   const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const cars = Object.fromEntries(formData.entries());
     console.log(cars, "cars");
+    const {_id, brand, model, speed, rating, category, seats, image, transmission, fuel, description, pricePerDay, available} = cars;
+    const personalCarAddingData = {
+      userId: user.id,
+      userImage: user.image,
+      UserName: user.name,
+      carId:_id,
+      model,
+      brand,
+      image,
+      pricePerDay,
+      category,
+      location,
+    };
 
     const [res1, res2] = await Promise.all([
       fetch("http://localhost:5000/explore", {
@@ -41,7 +39,7 @@ const AddCarPage = () => {
       fetch("http://localhost:5000/listing", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify(cars),
+        body: JSON.stringify(personalCarAddingData),
       }),
     ]);
     const data1 = await res1.json();
@@ -82,28 +80,28 @@ const AddCarPage = () => {
           <form onSubmit={onSubmit} className="space-y-6">
             {/* Row 1 — Name & Price */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <TextField name="model" isRequired>
+              <TextField name="brand" isRequired>
                 <Label className="text-zinc-400 text-xs font-semibold uppercase tracking-widest">
-                  Car Name / Model
+                  Car Name / Brand
                 </Label>
                 <Input
-                  placeholder="e.g. Nissan GT-R"
+                  placeholder=""
                   className="rounded-lg bg-zinc-900 border border-zinc-700 text-white"
                 />
                 <FieldError />
               </TextField>
 
-              <TextField name="pricePerDay" type="number" isRequired>
+              <TextField name="model" isRequired>
                 <Label className="text-zinc-400 text-xs font-semibold uppercase tracking-widest">
-                  Daily Rent Price ($)
+                  Car Name / model 
                 </Label>
                 <Input
-                  type="number"
-                  placeholder="e.g. 189"
+                  placeholder=""
                   className="rounded-lg bg-zinc-900 border border-zinc-700 text-white"
                 />
                 <FieldError />
               </TextField>
+
             </div>
 
             {/* Row 2 — Type & Seats */}
@@ -139,7 +137,7 @@ const AddCarPage = () => {
                 </Label>
                 <Input
                   type="number"
-                  placeholder="e.g. 5"
+                  placeholder=""
                   className="rounded-lg bg-zinc-900 border border-zinc-700 text-white"
                 />
                 <FieldError />
@@ -173,7 +171,7 @@ const AddCarPage = () => {
                 </Select.Popover>
               </Select>
 
-              <Select
+              {/* <Select
                 name="transmission"
                 isRequired
                 className="w-full"
@@ -196,7 +194,23 @@ const AddCarPage = () => {
                     ))}
                   </ListBox>
                 </Select.Popover>
-              </Select>
+              </Select> */}
+
+
+              
+
+              <TextField name="pricePerDay" type="number" isRequired>
+                <Label className="text-zinc-400 text-xs font-semibold uppercase tracking-widest">
+                  Daily Rent Price ($)
+                </Label>
+                <Input
+                  type="number"
+                  placeholder=""
+                  className="rounded-lg bg-zinc-900 border border-zinc-700 text-white"
+                />
+                <FieldError />
+              </TextField>
+
             </div>
 
             {/* Row 4 — Speed & Location */}
@@ -206,7 +220,7 @@ const AddCarPage = () => {
                   Top Speed
                 </Label>
                 <Input
-                  placeholder="e.g. 250 km/h"
+                  placeholder=""
                   className="rounded-lg bg-zinc-900 border border-zinc-700 text-white"
                 />
                 <FieldError />
@@ -217,7 +231,7 @@ const AddCarPage = () => {
                   Pickup Location
                 </Label>
                 <Input
-                  placeholder="e.g. Dhaka"
+                  placeholder=""
                   className="rounded-lg bg-zinc-900 border border-zinc-700 text-white"
                 />
                 <FieldError />
@@ -231,7 +245,7 @@ const AddCarPage = () => {
               </Label>
               <Input
                 type="url"
-                placeholder="https://i.ibb.co/your-image.jpg"
+                placeholder="Enter your image url"
                 className="rounded-lg bg-zinc-900 border border-zinc-700 text-white"
               />
 
@@ -272,7 +286,7 @@ const AddCarPage = () => {
                 Description
               </Label>
               <TextArea
-                placeholder="Describe the car — features, condition, highlights..."
+                placeholder=""
                 className="rounded-lg bg-zinc-900 border border-zinc-700 text-white"
               />
               <FieldError />
