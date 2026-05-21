@@ -59,9 +59,9 @@ const CarDetailsPage = async ({ params }) => {
                 />
                 {/* Available badge */}
                 <Chip
-                  className={`absolute top-2 left-2 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold ${available ? "bg-green-500/20 text-green-400 border border-green-500/30" : "bg-red-500/20 text-red-400 border border-red-500/30"}`}
+                  className={`absolute top-2 left-2 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold ${available ==="true" ? "bg-green-500/20 text-green-400 border border-green-500/30" : "bg-red-500/20 text-red-400 border border-red-500/30"}`}
                 >
-                  {available ? (
+                  {available ==="true" ? (
                     <>
                       <BsCheckCircleFill /> Available Now
                     </>
@@ -235,7 +235,7 @@ const CarDetailsPage = async ({ params }) => {
               </Button>
             </div>
 
-            {available && (
+            {available === "true" && (
               <p className="text-zinc-600 text-xs text-center">
                 Free cancellation up to 24 hours before pickup
               </p>

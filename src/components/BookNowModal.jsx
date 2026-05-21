@@ -57,9 +57,9 @@ export function BookNowModal({ car }) {
     <Modal>
       <Button
         className="flex-1 py-6 bg-yellow-400 hover:bg-yellow-300 text-zinc-950 font-bold text-sm uppercase tracking-widest rounded-lg"
-        isDisabled={!car.available}
+        isDisabled={car.available !== "true"}
       >
-        {car.available ? "Book Now →" : "Not Available"}
+        {car.available ==="true" ? "Book Now →" : "Not Available"}
       </Button>
       <Modal.Backdrop className="bg-zinc-950/80 backdrop-blur-sm">
         <Modal.Container placement="auto">
