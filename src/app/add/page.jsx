@@ -29,6 +29,7 @@ const AddCarPage = () => {
       pricePerDay,
       category,
       location,
+      available,
     };
 
     const [res1, res2] = await Promise.all([
@@ -46,8 +47,19 @@ const AddCarPage = () => {
     const data1 = await res1.json();
     const data2 = await res2.json();
     console.log(data1,data2, "data");
-    if(data1){
-      toast.success("New car added")
+
+    if(data1.message === "This car already exists!") {
+    toast.error("This car is already listed!");
+    return;
+    }
+
+    if(data2.message === "Already in your listing!") {
+    toast.error("This car is already in your Added page!");
+    return;
+    }
+
+    if(data1.insertedId) {
+    toast.success("New car added!");
     }
   };
 

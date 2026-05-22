@@ -18,17 +18,17 @@ const DeleteAlert = ({car}) => {
       const data = await res.json();
       redirect("/explore")
       console.log(data,"data");
-    }
+  }
   return (
     <div>
       <AlertDialog>
-        <Button
-          variant="outline"
-          className={"rounded-none text-red-400 border border-red-300"}
-        >
-          <RiDeleteBin6Line />
-          Delete
-        </Button>
+     <Button
+  variant="outline"
+  className="flex items-center gap-2 px-4 py-2 border border-red-500/30 text-red-400 hover:bg-red-500/10 hover:border-red-400 text-xs uppercase tracking-widest rounded-lg transition-colors"
+>
+  <RiDeleteBin6Line />
+  Delete
+</Button>
         <AlertDialog.Backdrop>
           <AlertDialog.Container>
             <AlertDialog.Dialog className="sm:max-w-100">

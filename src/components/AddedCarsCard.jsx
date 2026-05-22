@@ -6,13 +6,11 @@ import EditModal from "./EditModal";
 import { BsCheckCircleFill, BsXCircleFill } from "react-icons/bs";
 import { FaLocationDot } from "react-icons/fa6";
 
-
 const AddedCarsCard = ({ car }) => {
   return (
-     <div>
+    <div>
       <Card className="bg-zinc-900 border border-zinc-800 overflow-hidden">
         <div className="flex flex-col md:flex-row gap-0">
-
           {/* Image */}
           <div className="relative w-full md:w-56 h-48 md:h-auto shrink-0">
             <Image
@@ -22,21 +20,29 @@ const AddedCarsCard = ({ car }) => {
               className="object-cover"
             />
             {/* Available badge */}
-            <div className={`absolute top-3 left-3 flex items-center gap-1 text-xs font-semibold px-3 py-1 rounded-full ${
-              car.available === "true" || car.available === true
-                ? "bg-green-500/20 text-green-400 border border-green-500/30"
-                : "bg-red-500/20 text-red-400 border border-red-500/30"
-            }`}>
-              {car.available === "true" || car.available === true
-                ? <><BsCheckCircleFill /> Available</>
-                : <><BsXCircleFill /> Unavailable</>
-              }
+            <div
+              className={`absolute top-3 left-3 flex items-center gap-1 text-xs font-semibold px-3 py-1 rounded-full ${
+                car.available === "true"
+                  ? "bg-green-500/20 text-green-400 border border-green-500/30"
+                  : "bg-red-500/20 text-red-400 border border-red-500/30"
+              }`}
+            >
+              {car.available === "true" ? (
+                <>
+                  <BsCheckCircleFill />
+                  Available
+                </>
+              ) : (
+                <>
+                  <BsXCircleFill />
+                  Unavailable
+                </>
+              )}
             </div>
           </div>
 
           {/* Info */}
           <div className="flex flex-col flex-1 p-6 gap-4">
-
             {/* Top */}
             <div className="flex items-start justify-between">
               <div>
@@ -51,8 +57,12 @@ const AddedCarsCard = ({ car }) => {
                 </p>
               </div>
               <div className="text-right">
-                <p className="text-zinc-400 text-xs uppercase tracking-widest">Per Day</p>
-                <p className="text-yellow-400 text-2xl font-bold">${car.pricePerDay}</p>
+                <p className="text-zinc-400 text-xs uppercase tracking-widest">
+                  Per Day
+                </p>
+                <p className="text-yellow-400 text-2xl font-bold">
+                  ${car.pricePerDay}
+                </p>
               </div>
             </div>
 
@@ -69,7 +79,6 @@ const AddedCarsCard = ({ car }) => {
               <EditModal car={car} />
               <DeleteAlert car={car} />
             </div>
-
           </div>
         </div>
       </Card>

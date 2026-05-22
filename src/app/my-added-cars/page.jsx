@@ -19,6 +19,7 @@ const MyAddedCars = async () => {
     }
   });
   const addedCars = await res.json();
+  
   // console.log(addedCars, "data");
   return (
     <section className="min-h-screen bg-zinc-950 relative overflow-hidden">
