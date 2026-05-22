@@ -17,7 +17,7 @@ const Search = () => {
   };
 
   return (
-    <div className="flex gap-4 mb-10 max-w-150">
+    <div className="flex flex-wrap sm:flex-row gap-4 mb-10 max-w-150">
       <input
         value={search}
         type="text"
