@@ -1,5 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import bannerImg from "../../public/download.jpg"
 
 const Banner = () => {
   return (
@@ -75,8 +77,14 @@ const Banner = () => {
             <div className="relative">
               {/* Main card */}
               <div className="w-80 bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
-                <div className="w-full h-48 bg-zinc-800 rounded-xl mb-4 flex items-center justify-center text-6xl">
-                  🚗
+                <div className="w-full h-48 bg-zinc-800 rounded-xl mb-4 flex items-center justify-center text-6xl relative">
+                  <Image
+                  src={bannerImg}
+                  alt=""
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-cover"
+                  />
                 </div>
                 <div className="flex items-center justify-between mb-1">
                   <h3 className="text-white font-semibold">Premium Sedan</h3>
